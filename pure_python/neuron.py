@@ -1,6 +1,7 @@
 from random import random
 from math import exp
 
+
 class Neuron:
     def __init__(self, weights_count):
         self.__weights = [0] * (weights_count + 1)
@@ -8,7 +9,10 @@ class Neuron:
         self.__net = 0.0
         self.__rangeMin = - 0.0003
         self.__rangeMax = 0.0003
-        self.randomize_weights()
+        # self.randomize_weights()
+
+    def set_weights(self, weights):
+        self.__weights = weights
 
     def randomize_weights(self):
         for i in range(len(self.__weights)):
@@ -28,6 +32,9 @@ class Neuron:
 
     def get_y(self):
         return self.__y
+
+    def get_net(self):
+        return self.__net
 
     def get_weights(self):
         return self.__weights[1:]

@@ -28,8 +28,8 @@ num_classes = 6
 
 one_layer_net = OneLayerNet(input_height * input_width, num_classes)
 
-train_dir = "data/train"
-test_dir = "data/test"
+train_dir = "../data/train"
+test_dir = "../data/test"
 
 train_generator = DataReader(train_dir, [input_height, input_width], True, input_channels, num_classes).get_generator()
 test_generator = DataReader(test_dir, [input_height, input_width], False, input_channels, num_classes).get_generator()
@@ -63,7 +63,7 @@ accuracy = passed / test_generator.get_data_size() * 100.0
 print("Accuracy: {:.4f}%".format(accuracy))
 
 print("Recognizing custom image")
-img = cv2.imread("custom.bmp", cv2.IMREAD_GRAYSCALE)
+img = cv2.imread("../0_0.bmp", cv2.IMREAD_GRAYSCALE)
 img = img.reshape((img.shape[0], img.shape[1], 1)).astype(np.float32)
 y = one_layer_net.test(Vector(img, None))
 print("Custom image recognized as {}".format(get_max_neuron_idx(y)))
