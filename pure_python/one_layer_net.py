@@ -7,9 +7,29 @@ class OneLayerNet:
     def __init__(self, inputs_count, output_neurons_count):
         self.__inputs_count = inputs_count
         self.__neurons = []
+        self.__eta = 0.5
         for j in range(output_neurons_count):
             self.__neurons.append(Neuron(inputs_count))
 
+    def train_delta_rule(self, vector):
+        for neuron in self.__neurons:
+            neuron.delta_calc_y(vector.get_x())
+        errors = [0] * len(self.__neurons)
+        error = 0.0
+
+        for i, neuron in enumerate(self.__neurons):
+            errors[i] = vector.get_d()[i] - neuron.get_y()
+            error += errors[i]
+
+        for i, neuron in enumerate(self.__neurons):
+            neuron_weights = neuron.get_weights()
+            delta_weights = [0] * (len(neuron_weights) + 1)
+
+            for j, weight in enumerate(delta_weights):
+                delta_weights[j] += self.__eta * errors[i] * vector.get_x()[j]
+            neuron.correct_weights(delta_weights)
+
+        return error
 
     def train(self, vector, learning_rate):
 
